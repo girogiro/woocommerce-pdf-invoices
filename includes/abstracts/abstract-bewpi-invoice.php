@@ -541,12 +541,12 @@ if ( ! class_exists( 'BEWPI_Abstract_Invoice' ) ) {
         protected function get_template_dir($template_name)
         {
             // check if a custom template exists.
-            $custom_template_dir = BEWPI_CUSTOM_TEMPLATES_INVOICES_DIR . $this->type . '/' . $template_name . '/';
+            $custom_template_dir = BEWPI_UPLOADS_DIR . 'bewpi-templates/invoices/' . $this->type . '/' . $template_name . '/';
             if (file_exists($custom_template_dir)) {
                 return $custom_template_dir;
             }
 
-            $template_dir = BEWPI_TEMPLATES_INVOICES_DIR . $this->type . '/' . $template_name . '/';
+            $template_dir = BEWPI_TEMPLATES_DIR . 'invoices' . $this->type . '/' . $template_name . '/';
             if (file_exists($template_dir)) {
                 return $template_dir;
             }

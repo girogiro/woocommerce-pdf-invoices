@@ -62,10 +62,10 @@
 				var js, fjs = d.getElementsByTagName(s)[0];
 				if (d.getElementById(id)) return;
 				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/<?php echo $this->lang_code; ?>/sdk.js#xfbml=1&version=v2.4&appId=483906578380615";
+				js.src = <?php esc_url( "//connect.facebook.net/" . get_bloginfo( 'language' ) . "/sdk.js#xfbml=1&version=v2.4&appId=483906578380615" ); ?>;
 				fjs.parentNode.insertBefore(js, fjs);
 			}(document, 'script', 'facebook-jssdk'));</script>
-		<div class="fb-share-button" data-href="https://wordpress.org/plugins/woocommerce-pdf-invoices/" data-layout="button_count"></div>
+		<div class="fb-share-button" data-href="<?php esc_url( "https://wordpress.org/plugins/woocommerce-pdf-invoices/" ); ?>" data-layout="button_count"></div>
 	</div>
 	<!-- Tweet -->
 	<div class="twitter btn">

@@ -23,17 +23,17 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
             /**
              * Loads all the template settings.
              */
-            add_action( 'init', array( &$this, 'load_settings' ) );
+            add_action( 'init', array( $this, 'load_settings' ) );
 
             /**
              * Register all template settings.
              */
-            add_action( 'admin_init', array( &$this, 'create_settings' ) );
+            add_action( 'admin_init', array( $this, 'create_settings' ) );
 
             /**
              * Displays all messages registered to 'template_settings'
              */
-            add_action( 'admin_notices', array( &$this, 'show_settings_notices' ) );
+            add_action( 'admin_notices', array( $this, 'show_settings_notices' ) );
         }
 
         /**
@@ -68,7 +68,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 	        register_setting(
 		        $this->settings_key,
 		        $this->settings_key,
-		        array( &$this, 'validate_input' )
+		        array( $this, 'validate_input' )
 	        );
 	        $this->add_settings_fields();
         }
@@ -84,7 +84,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' => 'bewpi-email-type',
 				    'name' => $this->prefix . 'email_type',
 				    'title' => __( 'Attach to Email', 'woocommerce-pdf-invoices' ),
-				    'callback' => array( &$this, 'select_callback' ),
+				    'callback' => array( $this, 'select_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'email',
 				    'type' => 'text',
@@ -113,7 +113,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' => 'bewpi-new-order',
 				    'name' => $this->prefix . 'new_order',
 				    'title' => '',
-				    'callback' => array( &$this, 'input_callback' ),
+				    'callback' => array( $this, 'input_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'email',
 				    'type' => 'checkbox',
@@ -125,7 +125,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' => 'bewpi-view-pdf',
 				    'name' => $this->prefix . 'view_pdf',
 				    'title' => __( 'View PDF', 'woocommerce-pdf-invoices' ),
-				    'callback' => array( &$this, 'select_callback' ),
+				    'callback' => array( $this, 'select_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'download',
 				    'type' => 'text',
@@ -146,7 +146,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' => 'bewpi-download-invoice-account',
 				    'name' => $this->prefix . 'download_invoice_account',
 				    'title' => '',
-				    'callback' => array( &$this, 'input_callback' ),
+				    'callback' => array( $this, 'input_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'download',
 				    'type' => 'checkbox',
@@ -159,7 +159,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' => 'bewpi-email-it-in',
 				    'name' => $this->prefix . 'email_it_in',
 				    'title' => '',
-				    'callback' => array( &$this, 'input_callback' ),
+				    'callback' => array( $this, 'input_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'cloud_storage',
 				    'type' => 'checkbox',
@@ -172,7 +172,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 			        'id' =>  'bewpi-email-it-in-account',
 			        'name' => $this->prefix . 'email_it_in_account',
 				    'title' => __( 'Email It In account', 'woocommerce-pdf-invoices' ),
-				    'callback' => array( &$this, 'input_callback' ),
+				    'callback' => array( $this, 'input_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'cloud_storage',
 				    'type' => 'text',
@@ -183,7 +183,7 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 				    'id' =>  'bewpi-mpdf-debug',
 				    'name' => $this->prefix . 'mpdf_debug',
 				    'title' => '',
-				    'callback' => array( &$this, 'input_callback' ),
+				    'callback' => array( $this, 'input_callback' ),
 				    'page' => $this->settings_key,
 				    'section' => 'debug',
 				    'type' => 'checkbox',
@@ -204,25 +204,25 @@ if ( ! class_exists( 'BEWPI_General_Settings' ) ) {
 		    add_settings_section(
 			    'email',
 			    __( 'Email Options', 'woocommerce-pdf-invoices' ),
-			    array( &$this, 'email_desc_callback' ),
+			    array( $this, 'email_desc_callback' ),
 			    $this->settings_key
 		    );
 		    add_settings_section(
 			    'download',
 			    __( 'Download Options', 'woocommerce-pdf-invoices' ),
-			    array( &$this, 'download_desc_callback' ),
+			    array( $this, 'download_desc_callback' ),
 			    $this->settings_key
 		    );
 		    add_settings_section(
 			    'cloud_storage',
 			    __( 'Cloud Storage Options', 'woocommerce-pdf-invoices' ),
-			    array( &$this, 'cloud_storage_desc_callback' ),
+			    array( $this, 'cloud_storage_desc_callback' ),
 			    $this->settings_key
 		    );
 		    add_settings_section(
 			    'debug',
 			    __( 'Debug Options', 'woocommerce-pdf-invoices' ),
-			    array( &$this, 'debug_desc_callback' ),
+			    array( $this, 'debug_desc_callback' ),
 			    $this->settings_key
 		    );
 	    }
