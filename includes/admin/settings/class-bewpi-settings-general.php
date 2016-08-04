@@ -25,7 +25,7 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 	public function __construct() {
 
 		$this->id    = 'general';
-		$this->label = __( 'General', 'woocommerce-pdf-invoices' );
+		$this->label = __( 'General', 'woocommerce' );
 
 		add_filter( 'bewpi_settings_tabs_array', array( $this, 'add_settings_page' ), 20 );
 		add_action( 'bewpi_settings_' . $this->id, array( $this, 'output' ) );
@@ -39,93 +39,112 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 	 */
 	public function get_settings() {
 
-		$settings = apply_filters( 'woocommerce_general_settings', array(
+		$settings = apply_filters( 'bewpi_general_settings', array(
 
-			array( 'title' => __( 'General Options', 'woocommerce' ), 'type' => 'title', 'desc' => '', 'id' => 'general_options' ),
+			// General Options
+			array( 'title' => __( 'General Options', 'woocommerce-pdf-invoices' ), 'type' => 'title', 'desc' => '', 'id' => 'general_options' ),
 
 			array(
-				'title'   => __( 'Enable Taxes', 'woocommerce' ),
-				'desc'    => __( 'Enable taxes and tax calculations', 'woocommerce' ),
-				'id'      => 'woocommerce_calc_taxes',
-				'default' => 'no',
-				'type'    => 'checkbox'
+				'title'           => __( 'Attach to Email', 'woocommerce-pdf-invoices' ),
+				'desc'            => __( 'Processing order', 'woocommerce-pdf-invoices' ),
+				'id'              => 'bewpi_customer_processing_order',
+				'default'         => 'yes',
+				'type'            => 'checkbox',
+				'checkboxgroup'   => 'start',
+				'show_if_checked' => 'option',
 			),
 
 			array(
-				'title'   => __( 'Store Notice', 'woocommerce' ),
-				'desc'    => __( 'Enable site-wide store notice text', 'woocommerce' ),
-				'id'      => 'woocommerce_demo_store',
-				'default' => 'no',
-				'type'    => 'checkbox'
+				'desc'            => __( 'Completed order', 'woocommerce-pdf-invoices' ),
+				'id'              => 'bewpi_customer_completed_order',
+				'default'         => 'yes',
+				'type'            => 'checkbox',
+				'checkboxgroup'   => '',
+				'show_if_checked' => 'yes',
+				'autoload'        => false,
 			),
 
 			array(
-				'title'    => __( 'Store Notice Text', 'woocommerce' ),
-				'desc'     => '',
-				'id'       => 'woocommerce_demo_store_notice',
-				'default'  => __( 'This is a demo store for testing purposes &mdash; no orders shall be fulfilled.', 'woocommerce' ),
-				'type'     => 'textarea',
-				'css'     => 'width:350px; height: 65px;',
-				'autoload' => false
+				'desc'            => __( 'Customer invoice', 'woocommerce-pdf-invoices' ),
+				'id'              => 'bewpi_customer_invoice',
+				'default'         => 'yes',
+				'type'            => 'checkbox',
+				'checkboxgroup'   => '',
+				'show_if_checked' => 'yes',
+				'autoload'        => false,
+			),
+
+			array(
+				'desc'            => __( 'New Order', 'woocommerce-pdf-invoices' ),
+				'id'              => 'bewpi_new_order',
+				'default'         => 'no',
+				'type'            => 'checkbox',
+				'checkboxgroup'   => 'end',
+				'show_if_checked' => 'yes',
+				'autoload'        => false,
 			),
 
 			array( 'type' => 'sectionend', 'id' => 'general_options'),
 
-			array( 'title' => __( 'Currency Options', 'woocommerce' ), 'type' => 'title', 'desc' => __( 'The following options affect how prices are displayed on the frontend.', 'woocommerce' ), 'id' => 'pricing_options' ),
+			// Download Options
+			array( 'title' => __( 'Download Options', 'woocommerce-pdf-invoices' ), 'type' => 'title', 'desc' => '', 'id' => 'download_options' ),
 
 			array(
-				'title'    => __( 'Thousand Separator', 'woocommerce' ),
-				'desc'     => __( 'This sets the thousand separator of displayed prices.', 'woocommerce' ),
-				'id'       => 'woocommerce_price_thousand_sep',
-				'css'      => 'width:50px;',
-				'default'  => ',',
+				'title'    => __( 'View PDF', 'woocommerce-pdf-invoices' ),
+				'desc'     => __( 'How would you like to view the PDF invoice?', 'woocommerce-pdf-invoices' ),
+				'id'       => 'bewpi_view_pdf',
+				'class'    => 'wc-enhanced-select',
+				'css'      => 'min-width:300px;',
+				'default'  => 'browser',
+				'type'     => 'select',
+				'options'  => array(
+					'download'  => __( 'Download', 'woocommerce-pdf-invoices' ),
+					'browser'   => __( 'Open in new browser tab/window', 'woocommerce-pdf-invoices' ),
+				),
+				'desc_tip' =>  true,
+			),
+
+			array(
+				'title'         => __( 'My Account Page', 'woocommerce-pdf-invoices' ),
+				'desc'          => __( 'Enable download invoice on "My Account" page', 'woocommerce-pdf-invoices' ),
+				'id'            => 'bewpi_download_invoice_account',
+				'default'       => 'no',
+				'type'          => 'checkbox'
+			),
+
+			array( 'type' => 'sectionend', 'id' => 'download_options' ),
+
+			// Cloud Options
+			array(
+				'title' => __( 'Cloud Options', 'woocommerce-pdf-invoices' ),
+				'type' => 'title',
+				'desc' => sprintf( __( 'Sign up on %s and enter your account below to automatically send invoices to your Dropbox, OneDrive, Google Drive or Egnyte.', 'woocommerce-pdf-invoices' ), '<a href="https://emailitin.com">Email It In</a>' ),
+				'id' => 'cloud_options'
+			),
+
+			array(
+				'title'         => __( 'Cloud Storage', 'woocommerce-pdf-invoices' ),
+				'desc'          => __( 'Enable Email It In', 'woocommerce-pdf-invoices' ),
+				'id'            => 'bewpi_email_it_in',
+				'default'       => 'no',
+				'type'          => 'checkbox'
+			),
+
+			array(
+				'title'    => __( 'User Account Email', 'woocommerce-pdf-invoices' ),
+				'desc'     => sprintf( __( 'Enter your user account email from %s.', 'woocommerce-pdf-invoices' ), '<a href="https://www.emailitin.com/user_account">Email It In</a>' ),
+				'id'       => 'bewpi_email_it_in_account',
+				'default'  => '',
 				'type'     => 'text',
+				'css'      => 'min-width:300px;',
 				'desc_tip' =>  true,
 			),
 
-			array(
-				'title'    => __( 'Decimal Separator', 'woocommerce' ),
-				'desc'     => __( 'This sets the decimal separator of displayed prices.', 'woocommerce' ),
-				'id'       => 'woocommerce_price_decimal_sep',
-				'css'      => 'width:50px;',
-				'default'  => '.',
-				'type'     => 'text',
-				'desc_tip' =>  true,
-			),
-
-			array(
-				'title'    => __( 'Number of Decimals', 'woocommerce' ),
-				'desc'     => __( 'This sets the number of decimal points shown in displayed prices.', 'woocommerce' ),
-				'id'       => 'woocommerce_price_num_decimals',
-				'css'      => 'width:50px;',
-				'default'  => '2',
-				'desc_tip' =>  true,
-				'type'     => 'number',
-				'custom_attributes' => array(
-					'min'  => 0,
-					'step' => 1
-				)
-			),
-
-			array( 'type' => 'sectionend', 'id' => 'pricing_options' )
+			array( 'type' => 'sectionend', 'id' => 'cloud_options' ),
 
 		) );
 
 		return apply_filters( 'bewpi_get_settings_' . $this->id, $settings );
-	}
-
-	/**
-	 * Output a colour picker input box.
-	 *
-	 * @param mixed $name
-	 * @param string $id
-	 * @param mixed $value
-	 * @param string $desc (default: '')
-	 */
-	public function color_picker( $name, $id, $value, $desc = '' ) {
-		echo '<div class="color_box">' . wc_help_tip( $desc ) . '
-			<input name="' . esc_attr( $id ). '" id="' . esc_attr( $id ) . '" type="text" value="' . esc_attr( $value ) . '" class="colorpick" /> <div id="colorPickerDiv_' . esc_attr( $id ) . '" class="colorpickdiv"></div>
-		</div>';
 	}
 
 	/**

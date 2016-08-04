@@ -48,7 +48,8 @@ class BEWPI_AJAX {
 			if ( ! WP_DEBUG || ( WP_DEBUG && ! WP_DEBUG_DISPLAY ) ) {
 				@ini_set( 'display_errors', 0 );
 			}
-			$GLOBALS['wpdb']->hide_errors();
+			global $wpdb;
+			$wpdb->hide_errors();
 		}
 	}
 

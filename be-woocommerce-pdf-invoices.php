@@ -45,7 +45,6 @@ final class BE_WooCommerce_PDF_Invoices {
 	 *
 	 * Ensures only one instance of BE_WooCommerce_PDF_Invoices is loaded or can be loaded.
 	 *
-	 * @since 3.0.0
 	 * @static
 	 * @see BEWPI()
 	 * @return BE_WooCommerce_PDF_Invoices - Main instance.
@@ -70,7 +69,6 @@ final class BE_WooCommerce_PDF_Invoices {
 
 	/**
 	 * Hook into actions and filters.
-	 * @since  2.3
 	 */
 	private function init_hooks() {
 		register_activation_hook( __FILE__, array( 'BEWPI_Install', 'install' ) );
@@ -215,7 +213,6 @@ endif;
  *
  * Returns the main instance of BEWPI
  *
- * @since  3.0.0
  * @return BE_WooCommerce_PDF_Invoices
  */
 function BEWPI() {

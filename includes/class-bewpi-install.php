@@ -65,9 +65,6 @@ class BEWPI_Install {
 
 		BEWPI_Admin_Notices::remove_all_notices();
 		BEWPI_Admin_Notices::add_notice( 'install' );
-
-		// Trigger action
-		//do_action( 'bewpi_installed' );
 	}
 
 	/**

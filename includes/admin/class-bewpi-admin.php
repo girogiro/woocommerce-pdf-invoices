@@ -34,7 +34,7 @@ class BEWPI_Admin {
 //		include_once( 'wc-meta-box-functions.php' );
 //		include_once( 'class-wc-admin-post-types.php' );
 //		include_once( 'class-wc-admin-taxonomies.php' );
-//		include_once( 'class-wc-admin-menus.php' );
+		include_once( 'class-bewpi-admin-menus.php' );
 		include_once( 'class-bewpi-admin-notices.php' );
 //		include_once( 'class-wc-admin-assets.php' );
 //		include_once( 'class-wc-admin-api-keys.php' );

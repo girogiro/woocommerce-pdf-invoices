@@ -50,7 +50,7 @@ class BEWPI_Admin_Settings {
 			include_once( 'settings/class-bewpi-settings-page.php' );
 
 			$settings[] = include( 'settings/class-bewpi-settings-general.php' );
-			//$settings[] = include( 'settings/class-bewpi-settings-template.php' );
+			$settings[] = include( 'settings/class-bewpi-settings-template.php' );
 
 			self::$settings = apply_filters( 'bewpi_get_settings_pages', $settings );
 		}
