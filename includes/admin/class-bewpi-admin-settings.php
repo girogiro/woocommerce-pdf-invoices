@@ -122,11 +122,11 @@ class BEWPI_Admin_Settings {
 
 		do_action( 'bewpi_settings_start' );
 
-		wp_enqueue_script( 'bewpi_settings', BEWPI()->plugin_url() . '/assets/js/admin/settings' . $suffix . '.js', array( 'jquery', 'jquery-ui-datepicker', 'jquery-ui-sortable', 'iris', 'select2' ), BEWPI()->version, true );
+		wp_enqueue_script( 'bewpi_settings', BEWPI()->plugin_url() . '/assets/js/admin/settings' . $suffix . '.js', array( 'jquery', 'jquery-ui-datepicker', 'iris' ), BEWPI()->version, true );
 
-		wp_localize_script( 'bewpi_settings', 'bewpi_settings_params', array(
-			'i18n_nav_warning' => __( 'The changes you made will be lost if you navigate away from this page.', 'woocommerce' )
-		) );
+//		wp_localize_script( 'bewpi_settings', 'bewpi_settings_params', array(
+//			'i18n_nav_warning' => __( 'The changes you made will be lost if you navigate away from this page.', 'woocommerce' )
+//		) );
 
 		// Include settings pages
 		self::get_settings_pages();
@@ -521,7 +521,7 @@ class BEWPI_Admin_Settings {
 	}
 
 	/**
-	 * Helper function to get the formated description and tip HTML for a
+	 * Helper function to get the formatted description and tip HTML for a
 	 * given form field. Plugins can call this when implementing their own custom
 	 * settings types.
 	 *
@@ -552,7 +552,7 @@ class BEWPI_Admin_Settings {
 		if ( $tooltip_html && in_array( $value['type'], array( 'checkbox' ) ) ) {
 			$tooltip_html = '<p class="description">' . $tooltip_html . '</p>';
 		} elseif ( $tooltip_html ) {
-			$tooltip_html = wc_help_tip( $tooltip_html );
+			$tooltip_html = bewpi_help_tip( $tooltip_html );
 		}
 
 		return array(

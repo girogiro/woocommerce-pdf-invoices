@@ -132,7 +132,7 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 
 			array(
 				'title'    => __( 'User Account Email', 'woocommerce-pdf-invoices' ),
-				'desc'     => sprintf( __( 'Enter your user account email from %s.', 'woocommerce-pdf-invoices' ), '<a href="https://www.emailitin.com/user_account">Email It In</a>' ),
+				'desc'     => sprintf( __( 'Enter your user account email from %s.', 'woocommerce-pdf-invoices' ), 'Email It In' ),
 				'id'       => 'bewpi_email_it_in_account',
 				'default'  => '',
 				'type'     => 'text',
