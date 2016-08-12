@@ -50,7 +50,7 @@ class BEWPI_Admin_Settings {
 			include_once( 'settings/class-bewpi-settings-page.php' );
 
 			$settings[] = include( 'settings/class-bewpi-settings-general.php' );
-			$settings[] = include( 'settings/class-bewpi-settings-template.php' );
+			$settings[] = include( 'settings/class-bewpi-settings-templates.php' );
 
 			self::$settings = apply_filters( 'bewpi_get_settings_pages', $settings );
 		}
@@ -124,9 +124,9 @@ class BEWPI_Admin_Settings {
 
 		wp_enqueue_script( 'bewpi_settings', BEWPI()->plugin_url() . '/assets/js/admin/settings' . $suffix . '.js', array( 'jquery', 'jquery-ui-datepicker', 'iris' ), BEWPI()->version, true );
 
-//		wp_localize_script( 'bewpi_settings', 'bewpi_settings_params', array(
-//			'i18n_nav_warning' => __( 'The changes you made will be lost if you navigate away from this page.', 'woocommerce' )
-//		) );
+		wp_localize_script( 'bewpi_settings', 'bewpi_settings_params', array(
+			'i18n_nav_warning' => __( 'The changes you made will be lost if you navigate away from this page.', 'woocommerce-pdf-invoices' )
+		) );
 
 		// Include settings pages
 		self::get_settings_pages();

@@ -48,7 +48,7 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 				'title'           => __( 'Attach to Email', 'woocommerce-pdf-invoices' ),
 				'desc'            => __( 'Processing order', 'woocommerce-pdf-invoices' ),
 				'id'              => 'bewpi_customer_processing_order',
-				'default'         => 'yes',
+				'default'         => 'no',
 				'type'            => 'checkbox',
 				'checkboxgroup'   => 'start',
 				'show_if_checked' => 'option',
@@ -57,7 +57,7 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 			array(
 				'desc'            => __( 'Completed order', 'woocommerce-pdf-invoices' ),
 				'id'              => 'bewpi_customer_completed_order',
-				'default'         => 'yes',
+				'default'         => 'no',
 				'type'            => 'checkbox',
 				'checkboxgroup'   => '',
 				'show_if_checked' => 'yes',
@@ -67,7 +67,7 @@ class BEWPI_Settings_General extends BEWPI_Settings_Page {
 			array(
 				'desc'            => __( 'Customer invoice', 'woocommerce-pdf-invoices' ),
 				'id'              => 'bewpi_customer_invoice',
-				'default'         => 'yes',
+				'default'         => 'no',
 				'type'            => 'checkbox',
 				'checkboxgroup'   => '',
 				'show_if_checked' => 'yes',

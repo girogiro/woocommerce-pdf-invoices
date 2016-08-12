@@ -11,7 +11,6 @@
  * Text Domain:       woocommerce-pdf-invoices
  * Domain Path:       /lang
  */
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } // Exit if accessed directly
@@ -54,6 +53,17 @@ final class BE_WooCommerce_PDF_Invoices {
 			self::$_instance = new self();
 		}
 		return self::$_instance;
+	}
+
+	/**
+	 * Auto-load in-accessible properties on demand.
+	 * @param mixed $key
+	 * @return mixed
+	 */
+	public function __get( $key ) {
+		if ( in_array( $key, array( 'templater' ) ) ) {
+			return $this->$key();
+		}
 	}
 
 	/**
@@ -125,15 +135,11 @@ final class BE_WooCommerce_PDF_Invoices {
 		include_once( 'includes/bewpi-core-functions.php' );
 		include_once( 'includes/class-bewpi-install.php' );
 		include_once( 'includes/class-bewpi-ajax.php' );
+		include_once( 'includes/class-bewpi-templates.php' );
 
 		if ( $this->is_request( 'admin' ) ) {
 			include_once( 'includes/admin/class-bewpi-admin.php' );
 		}
-
-//		include_once( 'includes/abstracts/abstract-bewpi-document.php' );
-//		include_once( 'includes/abstracts/abstract-bewpi-invoice.php' );
-//		include_once( 'includes/abstracts/abstract-bewpi-setting.php' );
-//		include_once( 'includes/class-bewpi-invoice.php' );
 	}
 
 	/**
@@ -152,9 +158,6 @@ final class BE_WooCommerce_PDF_Invoices {
 
 		// Set up localisation.
 		$this->load_plugin_textdomain();
-
-		// Load class instances.
-		//$this->invoice_factory = new BEWPI_Invoice_Factory();                   // Invoice Factory to create new invoice instances
 
 		// Init action.
 		do_action( 'bewpi_init' );
@@ -203,6 +206,14 @@ final class BE_WooCommerce_PDF_Invoices {
 	 */
 	public function ajax_url() {
 		return admin_url( 'admin-ajax.php', 'relative' );
+	}
+
+	/**
+	 * Templates Class.
+	 * @return BEWPI_Templates
+	 */
+	public function templater() {
+		return BEWPI_Templates::instance();
 	}
 }
 

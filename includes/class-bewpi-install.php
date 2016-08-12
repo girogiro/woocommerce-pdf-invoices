@@ -65,6 +65,9 @@ class BEWPI_Install {
 
 		BEWPI_Admin_Notices::remove_all_notices();
 		BEWPI_Admin_Notices::add_notice( 'install' );
+
+		// can't find 1 character of unexpected output
+		ob_end_clean();
 	}
 
 	/**
