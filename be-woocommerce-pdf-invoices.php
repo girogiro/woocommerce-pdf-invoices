@@ -84,7 +84,6 @@ final class BE_WooCommerce_PDF_Invoices {
 		register_activation_hook( __FILE__, array( 'BEWPI_Install', 'install' ) );
 		add_action( 'after_setup_theme', array( $this, 'include_template_functions' ), 11 );
 		add_action( 'init', array( $this, 'init' ), 0 );
-		//add_action( 'init', array( 'WC_Shortcodes', 'init' ) );
 	}
 
 	/**
@@ -136,6 +135,7 @@ final class BE_WooCommerce_PDF_Invoices {
 		include_once( 'includes/class-bewpi-install.php' );
 		include_once( 'includes/class-bewpi-ajax.php' );
 		include_once( 'includes/class-bewpi-templates.php' );
+		include_once( 'includes/abstracts/abstract-bewpi-settings-api.php' ); // Settings API (for templates)
 
 		if ( $this->is_request( 'admin' ) ) {
 			include_once( 'includes/admin/class-bewpi-admin.php' );

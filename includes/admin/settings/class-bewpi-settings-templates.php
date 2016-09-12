@@ -4,7 +4,7 @@
  *
  * @author      Bas Elbers
  * @category    Admin
- * @package     BE_bewpi_PDF_Invoices/Admin
+ * @package     BE_WooCommerce_PDF_Invoices/Admin
  * @version     1.0.0
  */
 
@@ -84,8 +84,8 @@ class BEWPI_Settings_Templates extends BEWPI_Settings_Page {
 
 		if ( $current_section ) {
 			foreach ( $templates as $template_key => $template ) {
-				if ( strtolower( $templaet ) == $current_section ) {
-					$email->admin_options();
+				if ( strtolower( $template_key ) == $current_section ) {
+					$template->admin_options();
 					break;
 				}
 			}

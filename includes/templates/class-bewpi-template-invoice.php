@@ -153,84 +153,41 @@ class BEWPI_Template_Invoice extends BEWPI_Template {
 	 * Initialise settings form fields.
 	 */
 	public function init_form_fields() {
+		// get all emails
+		$emails = WC()->mailer()->get_emails();
+		$email_options = array();
+		foreach($emails as $email){
+			$email_options[$email->id] = $email->title;
+		}
+
 		$this->form_fields = array(
 			'enabled' => array(
-				'title'         => __( 'Enable/Disable', 'woocommerce' ),
+				'title'         => __( 'Enable/Disable', 'woocommerce-pdf-invoices' ),
 				'type'          => 'checkbox',
 				'label'         => __( 'Enable invoice generation', 'woocommerce-pdf-invoices' ),
 				'default'       => 'yes'
 			),
-			'processing_order' => array(
-				'title'         => __( 'Attach to Email', 'woocommerce-pdf-invoices' ),
-				'type'          => 'checkbox',
-				'label'         => __( 'Processing order', 'woocommerce-pdf-invoices' ),
-				'checkboxgroup' => 'start',
-				'default'       => 'no',
-				'css' => 'style="display:none;"'
+			'emails' => array(
+				'title'             => __( 'Attach to Emails', 'woocommerce-pdf-invoices' ),
+				'type'              => 'multiselect',
+				'class'             => 'wc-enhanced-select',
+				'css'               => 'width: 450px;',
+				'default'           => '',
+				'options'           => $email_options,
+				'custom_attributes' => array(
+					'data-placeholder'  => __( 'Select some emails', 'woocommerce-pdf-invoices' )
+				)
 			),
-			'customer_completed_order' => array(
-				'title'         => '',
-				'type'          => 'checkbox',
-				'label'         => __( 'Completed order', 'woocommerce-pdf-invoices' ),
-				'checkboxgroup' => '',
-				'default'       => 'no'
-			),
-			'customer_invoice' => array(
-				'title'         => '',
-				'type'          => 'checkbox',
-				'label'         => __( 'Customer invoice', 'woocommerce-pdf-invoices' ),
-				'checkboxgroup' => 'end',
-				'default'       => 'no'
-			),
-			'new_order' => array(
-				'desc'            => __( 'New Order', 'woocommerce-pdf-invoices' ),
-				'id'              => 'bewpi_new_order',
-				'default'         => 'no',
-				'type'            => 'checkbox',
-				'checkboxgroup'   => 'end',
-				'show_if_checked' => 'yes',
-				'autoload'        => false,
-			),
-			'subject' => array(
-				'title'         => __( 'Email Subject', 'woocommerce' ),
-				'type'          => 'text',
-				'description'   => sprintf( __( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->subject ),
-				'placeholder'   => '',
-				'default'       => '',
-				'desc_tip'      => true
-			),
-			'heading' => array(
-				'title'         => __( 'Email Heading', 'woocommerce' ),
-				'type'          => 'text',
-				'description'   => sprintf( __( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->heading ),
-				'placeholder'   => '',
-				'default'       => '',
-				'desc_tip'      => true
-			),
-			'subject_paid' => array(
-				'title'         => __( 'Email Subject (paid)', 'woocommerce' ),
-				'type'          => 'text',
-				'description'   => sprintf( __( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->subject_paid ),
-				'placeholder'   => '',
-				'default'       => '',
-				'desc_tip'      => true
-			),
-			'heading_paid' => array(
-				'title'         => __( 'Email Heading (paid)', 'woocommerce' ),
-				'type'          => 'text',
-				'description'   => sprintf( __( 'Defaults to <code>%s</code>', 'woocommerce' ), $this->heading_paid ),
-				'placeholder'   => '',
-				'default'       => '',
-				'desc_tip'      => true
-			),
-			'email_type' => array(
-				'title'         => __( 'Email Type', 'woocommerce' ),
-				'type'          => 'select',
-				'description'   => __( 'Choose which format of email to send.', 'woocommerce' ),
-				'default'       => 'html',
-				'class'         => 'email_type wc-enhanced-select',
-				'options'       => $this->get_email_type_options(),
-				'desc_tip'      => true
+			'html' => array(
+				'title'             => '',
+				'type'              => 'tinymce',
+				'disabled'          => false,
+				'class'             => '',
+				'css'               => '',
+				'placeholder'       => '',
+				'desc_tip'          => false,
+				'description'       => '',
+				'custom_attributes' => array(),
 			)
 		);
 	}

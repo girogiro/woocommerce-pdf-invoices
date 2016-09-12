@@ -72,7 +72,7 @@ class BEWPI_Templates {
 		// Include email classes
 		include_once( 'templates/class-bewpi-template.php' );
 
-		$this->templates['BEWPI_Template_Invoice']              = include( 'templates/class-bewpi-template-invoice.php' );
+		$this->templates['BEWPI_Template_Invoice'] = include( 'templates/class-bewpi-template-invoice.php' );
 
 		$this->templates = apply_filters( 'bewpi_template_classes', $this->templates );
 	}

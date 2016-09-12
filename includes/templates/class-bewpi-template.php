@@ -11,15 +11,15 @@ if ( class_exists( 'BEWPI_Template' ) ) {
 /**
  * Email Class
  *
- * WooCommerce Email Class which is extended by specific email template classes to add emails to WooCommerce
+ * WooCommerce PDF Invoices Template Class which is extended by specific email template classes to attach invoice to.
  *
  * @class       BEWPI_Template
- * @version     2.5.0
- * @package     WooCommerce/Classes/Emails
- * @author      WooThemes
- * @extends     WC_Settings_API
+ * @version     1.0.0
+ * @package     BE_WooCommerce_PDF_Invoices/Classes/Templates
+ * @author      Bas Elbers
+ * @extends     BEWPI_Settings_API
  */
-class BEWPI_Template extends WC_Settings_API {
+class BEWPI_Template extends BEWPI_Settings_API {
 
 	/**
 	 * Email method ID.
@@ -196,11 +196,11 @@ class BEWPI_Template extends WC_Settings_API {
 		$this->init_settings();
 
 		// Save settings hook
-		add_action( 'woocommerce_update_options_email_' . $this->id, array( $this, 'process_admin_options' ) );
+		add_action( 'bewpi_update_options_templates_' . $this->id, array( $this, 'process_admin_options' ) );
 
 		// Default template base if not declared in child constructor
 		if ( is_null( $this->template_base ) ) {
-			$this->template_base = WC()->plugin_path() . '/templates/';
+			$this->template_base = BEWPI()->plugin_path() . '/templates/';
 		}
 
 		// Settings
@@ -217,20 +217,6 @@ class BEWPI_Template extends WC_Settings_API {
 
 		// For multipart messages
 		add_action( 'phpmailer_init', array( $this, 'handle_multipart' ) );
-	}
-
-	/**
-	 * Handle multipart mail.
-	 *
-	 * @param PHPMailer $mailer
-	 * @return PHPMailer
-	 */
-	public function handle_multipart( $mailer )  {
-		if ( $this->sending && 'multipart' === $this->get_email_type() ) {
-			$mailer->AltBody = wordwrap( preg_replace( $this->plain_search, $this->plain_replace, strip_tags( $this->get_content_plain() ) ) );
-			$this->sending   = false;
-		}
-		return $mailer;
 	}
 
 	/**
@@ -288,31 +274,6 @@ class BEWPI_Template extends WC_Settings_API {
 	 */
 	public function get_attachments() {
 		return apply_filters( 'woocommerce_email_attachments', array(), $this->id, $this->object );
-	}
-
-	/**
-	 * get_type function.
-	 *
-	 * @return string
-	 */
-	public function get_email_type() {
-		return $this->email_type && class_exists( 'DOMDocument' ) ? $this->email_type : 'plain';
-	}
-
-	/**
-	 * Get email content type.
-	 *
-	 * @return string
-	 */
-	public function get_content_type() {
-		switch ( $this->get_email_type() ) {
-			case 'html' :
-				return 'text/html';
-			case 'multipart' :
-				return 'multipart/alternative';
-			default :
-				return 'text/plain';
-		}
 	}
 
 	/**
@@ -512,21 +473,6 @@ class BEWPI_Template extends WC_Settings_API {
 	}
 
 	/**
-	 * Email type options.
-	 * @return array
-	 */
-	public function get_email_type_options() {
-		$types = array( 'plain' => __( 'Plain text', 'woocommerce' ) );
-
-		if ( class_exists( 'DOMDocument' ) ) {
-			$types['html']      = __( 'HTML', 'woocommerce' );
-			$types['multipart'] = __( 'Multipart', 'woocommerce' );
-		}
-
-		return $types;
-	}
-
-	/**
 	 * Admin Panel Options Processing.
 	 */
 	public function process_admin_options() {
@@ -538,9 +484,6 @@ class BEWPI_Template extends WC_Settings_API {
 		// Save templates
 		if ( isset( $post_data['template_html_code'] ) ) {
 			$this->save_template( $post_data['template_html_code'], $this->template_html );
-		}
-		if ( isset( $post_data['template_plain_code'] ) ) {
-			$this->save_template( $post_data['template_plain_code'], $this->template_plain );
 		}
 	}
 
@@ -724,19 +667,15 @@ class BEWPI_Template extends WC_Settings_API {
 
 		<?php
 			/**
-			 * woocommerce_email_settings_after action hook.
-			 * @param string $email The email object
+			 * bewpi_template_settings_after action hook.
+			 * @param string $template The template object
 			 */
-			do_action( 'woocommerce_email_settings_after', $this );
+			do_action( 'bewpi_template_settings_after', $this );
 		?>
 
-		<?php if ( current_user_can( 'edit_themes' ) && ( ! empty( $this->template_html ) || ! empty( $this->template_plain ) ) ) { ?>
+		<?php if ( current_user_can( 'edit_themes' ) ) { ?>
 			<div id="template">
 			<?php
-				$templates = array(
-					'template_html'  => __( 'HTML template', 'woocommerce' ),
-					'template_plain' => __( 'Plain text template', 'woocommerce' )
-				);
 
 				foreach ( $templates as $template_type => $title ) :
 					$template = $this->get_template( $template_type );
