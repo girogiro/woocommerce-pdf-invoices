@@ -150,7 +150,7 @@ class BEWPI_Settings_Templates extends BEWPI_Settings_Page {
 					</thead>
 					<tbody>
 						<?php
-						foreach ( $templates as $email_key => $email ) {
+						foreach ( $templates as $template_key => $template ) {
 							echo '<tr>';
 
 							foreach ( $columns as $key => $column ) {
@@ -158,21 +158,21 @@ class BEWPI_Settings_Templates extends BEWPI_Settings_Page {
 								switch ( $key ) {
 									case 'name' :
 										echo '<td class="wc-email-settings-table-' . esc_attr( $key ) . '">
-											<a href="' . admin_url( 'admin.php?page=bewpi-settings&tab=templates&section=' . strtolower( $email_key ) ) . '">' . $email->get_title() . '</a>
-											' . wc_help_tip( $email->get_description() ) . '
+											<a href="' . admin_url( 'admin.php?page=bewpi-settings&tab=templates&section=' . strtolower( $template_key ) ) . '">' . $template->get_title() . '</a>
+											' . bewpi_help_tip( $template->get_description() ) . '
 										</td>';
 									break;
 									case 'recipient' :
 										echo '<td class="wc-email-settings-table-' . esc_attr( $key ) . '">
-											' . esc_html( $email->is_customer_email() ? __( 'Customer', 'woocommerce' ) : $email->get_recipient() ) . '
+											' . esc_html( $template->is_customer_email() ? __( 'Customer', 'woocommerce' ) : $template->get_recipient() ) . '
 										</td>';
 									break;
 									case 'status' :
 										echo '<td class="wc-email-settings-table-' . esc_attr( $key ) . '">';
 
-										if ( $email->is_manual() ) {
+										if ( $template->is_manual() ) {
 											echo '<span class="status-manual tips" data-tip="' . __( 'Manually sent', 'woocommerce' ) . '">' . __( 'Manual', 'woocommerce' ) . '</span>';
-										} elseif ( $email->is_enabled() ) {
+										} elseif ( $template->is_enabled() ) {
 											echo '<span class="status-enabled tips" data-tip="' . __( 'Enabled', 'woocommerce' ) . '">' . __( 'Yes', 'woocommerce' ) . '</span>';
 										} else {
 											echo '<span class="status-disabled tips" data-tip="' . __( 'Disabled', 'woocommerce' ) . '">-</span>';
@@ -182,16 +182,16 @@ class BEWPI_Settings_Templates extends BEWPI_Settings_Page {
 									break;
 									case 'email_type' :
 										echo '<td class="wc-email-settings-table-' . esc_attr( $key ) . '">
-											' . esc_html( $email->get_content_type() ) . '
+											' . esc_html( $template->get_content_type() ) . '
 										</td>';
 									break;
 									case 'actions' :
 										echo '<td class="wc-email-settings-table-' . esc_attr( $key ) . '">
-											<a class="button alignright tips" data-tip="' . __( 'Configure', 'woocommerce' ) . '" href="' . admin_url( 'admin.php?page=wc-settings&tab=email&section=' . strtolower( $email_key ) ) . '">' . __( 'Configure', 'woocommerce' ) . '</a>
+											<a class="button alignright tips" data-tip="' . __( 'Configure', 'woocommerce' ) . '" href="' . admin_url( 'admin.php?page=wc-settings&tab=email&section=' . strtolower( $template_key ) ) . '">' . __( 'Configure', 'woocommerce' ) . '</a>
 										</td>';
 									break;
 									default :
-										do_action( 'bewpi_email_setting_column_' . $key, $email );
+										do_action( 'bewpi_email_setting_column_' . $key, $template );
 									break;
 								}
 							}

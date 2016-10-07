@@ -9,13 +9,13 @@ if ( ! class_exists( 'BEWPI_Template_Invoice' ) ) :
 /**
  * Customer Invoice.
  *
- * An email sent to the customer via admin.
+ * An email sent to the customer.
  *
  * @class       BEWPI_Template_Invoice
- * @version     2.3.0
- * @package     WooCommerce/Classes/Emails
- * @author      WooThemes
- * @extends     WC_Email
+ * @version     1.0.0
+ * @package     BE_WooCommerce/Classes/Templates
+ * @author      Bas Elbers
+ * @extends     BEWPI_Template_Invoice
  */
 class BEWPI_Template_Invoice extends BEWPI_Template {
 
